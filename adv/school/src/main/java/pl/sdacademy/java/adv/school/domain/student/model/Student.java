@@ -1,4 +1,4 @@
-package pl.sdacademy.java.adv.school;
+package pl.sdacademy.java.adv.school.domain.student.model;
 
 import java.time.LocalDate;
 
