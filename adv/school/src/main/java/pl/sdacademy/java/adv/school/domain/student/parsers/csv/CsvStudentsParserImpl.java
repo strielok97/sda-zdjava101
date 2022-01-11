@@ -4,13 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
-import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
 
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
 
-public class CsvStudentsParserImpl implements StudentsParser {
+public class CsvStudentsParserImpl extends AbstractCsvStudentParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvStudentsParserImpl.class);
 
@@ -39,7 +38,7 @@ public class CsvStudentsParserImpl implements StudentsParser {
         return students;
     }
 
-    public static Optional<Student> parseStudent(String line) {
+    protected Optional<Student> parseStudent(String line) {
         Scanner scanner = new Scanner(line);
         scanner.useDelimiter(",");
         List<String> strings = new ArrayList<>();
