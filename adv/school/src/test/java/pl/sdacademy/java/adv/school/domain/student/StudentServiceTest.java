@@ -140,6 +140,7 @@ class StudentServiceTest {
         Map<String, Student> studentToIdMap = studentService.getStudentsMappedByIdentifier();
 
         //then
-
+        assertThat(studentToIdMap).hasSize(15);
+        studentToIdMap.forEach((studentId, student) -> assertThat(studentId).isEqualTo(student.getId()));
     }
 }
