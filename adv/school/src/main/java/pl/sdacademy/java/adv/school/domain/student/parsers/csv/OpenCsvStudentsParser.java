@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
- class OpenCsvStudentParser extends AbstractCsvStudentParser {
+ class OpenCsvStudentsParser extends AbstractCsvStudentParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenCsvStudentParser.class);
 
     private static final CSVParser CSV_PARSER = new CSVParserBuilder().build();
