@@ -1,10 +1,13 @@
 package pl.sdacademy.java.adv.school.domain.student;
 
+import org.apache.commons.lang3.StringUtils;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StudentService {
@@ -53,6 +56,37 @@ public class StudentService {
   }
 
     public Map<String, Student> getStudentsMappedByIdentifier() {
-        throw new UnsupportedOperationException();
+        return studentRepository.findAllStudents().stream()
+                .collect(Collectors.toMap(Student::getId, Function.identity()));
     }
+
+    public Map<String, Student> getOldestStudentMappedByCity() {
+        return studentRepository.findAllStudents().stream()
+                .collect(Collectors.toMap(Student::getCity, Function.identity(), (student1, student2) -> {
+                    if (student1.getBirthDate().isBefore(student2.getBirthDate())){
+                        return student1;
+                    } else{
+                        return student2;
+                    }
+                }));
+    }
+
+    public Map<String, List<Student>> getStudentsMappedByClass() {
+        return studentRepository.findAllStudents().stream()
+                .collect(Collectors
+                        .groupingBy(student -> StringUtils.join(student.getSchoolYear(), student.getClassCode())));
+    }
+
+    public Double getPercentOfStudentNotFromCity(String city){
+        long numberOfStudentsNotFromCity = studentRepository.findAllStudents().stream()
+                .filter(student -> !student.getCity().equals(city))
+                .count();
+        int numberOfStudents = studentRepository.findAllStudents().size();
+
+        return numberOfStudentsNotFromCity / (double) numberOfStudents * 100;
+    }
+
+
+
+
 }
