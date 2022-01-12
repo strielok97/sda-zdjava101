@@ -133,4 +133,13 @@ class StudentServiceTest {
                 .extracting(Student::getId)
                 .containsExactly("00001001", "00002003", "00001298", "00001009", "00001004", "00001008");
     }
+
+    @Test
+    void getStudentsMappedByIdentifier() {
+        //WHEN
+        Map<String, Student> studentToIdMap = studentService.getStudentsMappedByIdentifier();
+
+        //then
+
+    }
 }
