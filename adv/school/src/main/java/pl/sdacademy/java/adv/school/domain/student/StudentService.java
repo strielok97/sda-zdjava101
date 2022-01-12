@@ -52,4 +52,7 @@ public class StudentService {
     return groupedStudents;
   }
 
+    public Map<String, Student> getStudentsMappedByIdentifier() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -133,4 +133,14 @@ class StudentServiceTest {
                 .extracting(Student::getId)
                 .containsExactly("00001001", "00002003", "00001298", "00001009", "00001004", "00001008");
     }
+
+    @Test
+    void getStudentsMapByIdentifier() {
+        //WHEN
+        Map<String,Student> studentToIdMap = studentService.getStudentsMappedByIdentifier();
+
+        //THEN
+        assertThat(studentToIdMap).hasSize(15);
+        studentToIdMap.forEach((studentId, student) -> assertThat(studentId).isEqualTo(student.getId()));
+    }
 }
