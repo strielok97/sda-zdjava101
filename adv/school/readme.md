@@ -1,8 +1,7 @@
 # Projekt szkoły
 
-Aplikacja do zarządzania skzołą
+Aplikacja do zarządzania szkołą
 
 ```java
-System.out.println("Hello")
-123
+System.out.println("Hello");
 ```
