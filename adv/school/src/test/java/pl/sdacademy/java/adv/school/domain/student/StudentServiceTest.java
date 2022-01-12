@@ -11,6 +11,7 @@ import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParser
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -117,5 +118,19 @@ class StudentServiceTest {
                         "00002003"
                 );
     }
-    
+
+
+    @Test
+    void getStudentsGroupedByCityAndSortedByName() {
+        //WHEN
+        Map<String,List<Student>> students = studentService.getStudentsGroupedByCityAndSortedByName();
+
+        //THEN
+        assertThat(students.get("Balice")).hasSize(1);
+        assertThat(students.get("Zabierzów")).hasSize(1);
+        assertThat(students.get("Kraków"))
+                .hasSize(6)
+                .extracting(Student::getId)
+                .containsExactly("00001001", "00002003", "00001298", "00001009", "00001004", "00001008");
+    }
 }
