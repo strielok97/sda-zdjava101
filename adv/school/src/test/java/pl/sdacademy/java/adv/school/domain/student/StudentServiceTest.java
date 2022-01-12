@@ -65,4 +65,57 @@ class StudentServiceTest {
                         "00002004"
                 );
     }
+
+    @Test
+    void getStudentsSortedByAge() {
+        //WHEN
+        var students = studentService.getStudentsSortedByAge();
+
+        //THEN
+        assertThat(students).extracting(Student::getId)
+                .containsExactly(
+                        "00002003",
+                        "00002001",
+                        "00002004",
+                        "00002002",
+                        "00002005",
+                        "00001008",
+                        "00001003",
+                        "00001004",
+                        "00001298",
+                        "00001001",
+                        "00001002",
+                        "00001006",
+                        "00001007",
+                        "00001005",
+                        "00001009"
+                );
+    }
+
+    @Test
+    void getStudentsSortedByAgeDesc() {
+        //WHEN
+        var students = studentService.getStudentsSortedByAgeDesc();
+
+        //THEN
+        assertThat(students).extracting(Student::getId)
+                .containsExactly(
+                        "00001009",
+                        "00001005",
+                        "00001007",
+                        "00001006",
+                        "00001002",
+                        "00001001",
+                        "00001298",
+                        "00001004",
+                        "00001003",
+                        "00001008",
+                        "00002005",
+                        "00002002",
+                        "00002004",
+                        "00002001",
+                        "00002003"
+                );
+    }
+    
 }
