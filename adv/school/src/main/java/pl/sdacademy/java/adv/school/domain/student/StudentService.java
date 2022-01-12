@@ -23,4 +23,22 @@ public class StudentService {
                         .thenComparing(Student::getFirstName))
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public List<Student> getStudentsSortedByAge() {
+
+        List<Student> allStudentsAge = studentRepository.findAllStudents();
+
+        return allStudentsAge.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate))
+                .collect(Collectors.toUnmodifiableList());
+
+    }
+
+    public List<Student> getStudentsSortedByAgeDesc() {
+        List<Student> allStudentsAge = studentRepository.findAllStudents();
+
+        return allStudentsAge.stream()
+                .sorted(Comparator.comparing(Student::getBirthDate).reversed())
+                .collect(Collectors.toUnmodifiableList());
+    }
 }
