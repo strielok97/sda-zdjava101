@@ -3,14 +3,14 @@ package pl.sdacademy.java.adv.school.domain.student.parsers.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
-import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
+import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-public class JsonStudentsParser implements StudentsParser {
+public class JsonStudentsParser implements RecordsParser<Student> {
 
     private final ObjectMapper objectMapper;
 

@@ -8,9 +8,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
-import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParserImpl;
+import pl.sdacademy.java.adv.school.domain.student.parsers.csv.OpenCsvStudentParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.json.JsonStudentsParser;
+import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,8 +32,8 @@ class StudentServiceTest {
 
     @BeforeAll
     static void beforeAll() throws IOException {
-        final StudentsParser studentsParser = new JsonStudentsParser();
-        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.json")) {
+        final RecordsParser<Student> studentsParser = new OpenCsvStudentParser();
+        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.csv")) {
             students = studentsParser.parseData(studentsDataStream);
         }
     }

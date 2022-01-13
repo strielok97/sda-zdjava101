@@ -6,10 +6,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
-import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParserImpl;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.OpenCsvStudentParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.json.JsonStudentsParser;
+import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,8 +24,8 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException {
-        // final StudentsParser studentsParser = new CsvStudentsParserImpl();
-        final StudentsParser studentsParser = new JsonStudentsParser();
+        // final RecordsParser<Student> studentsParser = new CsvStudentsParserImpl();
+        final RecordsParser<Student> studentsParser = new JsonStudentsParser();
         final List<Student> students;
         try (InputStream studentsDataStream = Main.class.getResourceAsStream("/students.json")) {
             students = studentsParser.parseData(studentsDataStream);
