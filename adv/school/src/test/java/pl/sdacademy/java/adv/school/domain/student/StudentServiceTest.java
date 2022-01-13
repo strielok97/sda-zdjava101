@@ -13,6 +13,10 @@ import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParser
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Clock;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +38,8 @@ class StudentServiceTest {
 
     @BeforeEach
     void setUp() {
-        studentService = new StudentService(new StudentListRepository(students));
+        Clock clock = Clock.fixed(ZonedDateTime.parse("2022-01-10T12:00:00Z").toInstant(), ZoneId.of("UTC"));
+        studentService = new StudentService(new StudentListRepository(students), clock);
     }
 
     @Test
@@ -208,5 +213,14 @@ class StudentServiceTest {
             Arguments.of("Kraków", 60d),
             Arguments.of("Skawina", 86.66d)
         );
+    }
+
+    @Test
+    void getStudentsMappedToAge(){
+        //WHEN
+        Map<String, Period> studentPeriodMap = studentService.getStudentsMappedToAge();
+        //THEN
+        assertThat(studentPeriodMap.get("00001001")).isEqualTo(Period.of(10,7,19));
+        assertThat(studentPeriodMap.get("00001298")).isEqualTo(Period.of(10,8,7));
     }
 }
