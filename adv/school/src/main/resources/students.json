@@ -1,0 +1,136 @@
+[ {
+  "id" : "00001001",
+  "lastName" : "Kowalski",
+  "firstName" : "Jan",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "A",
+  "birthDate" : "2011-05-22",
+  "city" : "Kraków"
+}, {
+  "id" : "00001002",
+  "lastName" : "Nowak",
+  "firstName" : "Anna",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "A",
+  "birthDate" : "2011-06-13",
+  "city" : "Skawina"
+}, {
+  "id" : "00001003",
+  "lastName" : "Wiśniewski",
+  "firstName" : "Karol",
+  "startYear" : 2017,
+  "schoolYear" : 4,
+  "classCode" : "A",
+  "birthDate" : "2010-12-24",
+  "city" : "Krzeszowice"
+}, {
+  "id" : "00001004",
+  "lastName" : "Wójcik",
+  "firstName" : "Katarzyna",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "A",
+  "birthDate" : "2011-01-01",
+  "city" : "Kraków"
+}, {
+  "id" : "00001005",
+  "lastName" : "Kowalczyk",
+  "firstName" : "Zbigniew",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "A",
+  "birthDate" : "2012-02-01",
+  "city" : "Modlniczka"
+}, {
+  "id" : "00001006",
+  "lastName" : "Kamińska",
+  "firstName" : "Zofia",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "B",
+  "birthDate" : "2011-08-12",
+  "city" : "Wieliczka"
+}, {
+  "id" : "00001007",
+  "lastName" : "Lewandowski",
+  "firstName" : "Artur",
+  "startYear" : 2018,
+  "schoolYear" : 4,
+  "classCode" : "B",
+  "birthDate" : "2011-09-22",
+  "city" : "Krzeszowice"
+}, {
+  "id" : "00001008",
+  "lastName" : "Zieliński",
+  "firstName" : "Krzysztof",
+  "startYear" : 2016,
+  "schoolYear" : 4,
+  "classCode" : "B",
+  "birthDate" : "2009-10-05",
+  "city" : "Kraków"
+}, {
+  "id" : "00001009",
+  "lastName" : "Szymańska",
+  "firstName" : "Karolina",
+  "startYear" : 2019,
+  "schoolYear" : 4,
+  "classCode" : "B",
+  "birthDate" : "2012-04-04",
+  "city" : "Kraków"
+}, {
+  "id" : "00001298",
+  "lastName" : "McKitrick",
+  "firstName" : "Áine",
+  "startYear" : 2021,
+  "schoolYear" : 4,
+  "classCode" : "B",
+  "birthDate" : "2011-05-03",
+  "city" : "Kraków"
+}, {
+  "id" : "00002001",
+  "lastName" : "Woźniak",
+  "firstName" : "Andrzej",
+  "startYear" : 2014,
+  "schoolYear" : 8,
+  "classCode" : "A",
+  "birthDate" : "2007-02-09",
+  "city" : "Skawina"
+}, {
+  "id" : "00002002",
+  "lastName" : "Dąbrowska",
+  "firstName" : "Julia",
+  "startYear" : 2014,
+  "schoolYear" : 8,
+  "classCode" : "A",
+  "birthDate" : "2007-11-10",
+  "city" : "Balice"
+}, {
+  "id" : "00002003",
+  "lastName" : "Kozłowski",
+  "firstName" : "Piotr",
+  "startYear" : 2014,
+  "schoolYear" : 8,
+  "classCode" : "A",
+  "birthDate" : "2006-01-06",
+  "city" : "Kraków"
+}, {
+  "id" : "00002004",
+  "lastName" : "Jankowska",
+  "firstName" : "Agnieszka",
+  "startYear" : 2013,
+  "schoolYear" : 8,
+  "classCode" : "A",
+  "birthDate" : "2007-07-12",
+  "city" : "Zabierzów"
+}, {
+  "id" : "00002005",
+  "lastName" : "Mazur",
+  "firstName" : "Damian",
+  "startYear" : 2016,
+  "schoolYear" : 8,
+  "classCode" : "A",
+  "birthDate" : "2009-08-31",
+  "city" : "Kłaj"
+} ]
