@@ -170,6 +170,16 @@ class StudentServiceTest {
     }
 
     @Test
+    void getNumberOfStudentsMappedByCity() {
+        //WHEN
+        Map<String,Long> students = studentService.getNumberOfStudentsMappedByCity();
+
+        //THEN
+        assertThat(students.get("Kraków")).isEqualTo(6);
+        assertThat(students.get("Wieliczka")).isEqualTo(1);
+    }
+
+    @Test
     void getPercentOfStudentNotFromCity(){
         //WHEN
         double result1 = studentService.getPercentOfStudentNotFromCity("Kraków");

@@ -77,6 +77,11 @@ public class StudentService {
                         .groupingBy(student -> StringUtils.join(student.getSchoolYear(), student.getClassCode())));
     }
 
+    public Map<String, Long> getNumberOfStudentsMappedByCity(){
+        return studentRepository.findAllStudents().stream()
+                .collect(Collectors.groupingBy(Student::getCity, Collectors.counting()));
+    }
+
     public Double getPercentOfStudentNotFromCity(String city){
         long numberOfStudentsNotFromCity = studentRepository.findAllStudents().stream()
                 .filter(student -> !student.getCity().equals(city))
