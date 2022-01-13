@@ -10,6 +10,7 @@ import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParserImpl;
+import pl.sdacademy.java.adv.school.domain.student.parsers.json.JsonStudentsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +31,8 @@ class StudentServiceTest {
 
     @BeforeAll
     static void beforeAll() throws IOException {
-        final StudentsParser studentsParser = new CsvStudentsParserImpl();
-        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.csv")) {
+        final StudentsParser studentsParser = new JsonStudentsParser();
+        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.json")) {
             students = studentsParser.parseData(studentsDataStream);
         }
     }
