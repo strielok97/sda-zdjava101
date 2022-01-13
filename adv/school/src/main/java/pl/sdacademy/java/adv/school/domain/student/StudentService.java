@@ -57,6 +57,7 @@ public class StudentService {
 
     public Map<String, Student> getStudentsMappedByIdentifier() {
         return studentRepository.findAllStudents().stream()
+                //.collect(Collectors.toMap(Student::getId, student -> student))
                 .collect(Collectors.toMap(Student::getId, Function.identity()));
     }
 
@@ -90,8 +91,4 @@ public class StudentService {
 
         return numberOfStudentsNotFromCity / (double) numberOfStudents * 100;
     }
-
-
-
-
 }
