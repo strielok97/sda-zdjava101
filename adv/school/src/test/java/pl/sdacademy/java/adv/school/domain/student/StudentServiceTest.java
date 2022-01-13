@@ -3,6 +3,9 @@ package pl.sdacademy.java.adv.school.domain.student;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
@@ -188,5 +191,22 @@ class StudentServiceTest {
         //THEN
         assertThat(result1).isEqualTo(60d);
         assertThat(result2).isEqualTo(86.66d, withPrecision(0.5d));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void getPercentOfStudentsNotFromGivenCity(String city, double expectedResult) {
+        //WHEN
+        double result = studentService.getPercentOfStudentNotFromCity(city);
+
+        //THEN
+        assertThat(result).isEqualTo(expectedResult, withPrecision(0.01d));
+    }
+
+    static List<Arguments> getPercentOfStudentsNotFromGivenCity() {
+        return List.of(
+            Arguments.of("Kraków", 60d),
+            Arguments.of("Skawina", 86.66d)
+        );
     }
 }
