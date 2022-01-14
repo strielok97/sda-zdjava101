@@ -5,12 +5,10 @@ import pl.sdacademy.java.adv.school.domain.student.model.Student;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -102,5 +100,13 @@ public class StudentService {
         return studentRepository.findAllStudents().stream()
                 .collect(Collectors
                         .toMap(Student::getId, student -> Period.between(student.getBirthDate(), LocalDate.now(clock))));
+    }
+
+    public Map<String, Integer> studentsToSkippedYears() {
+        throw new UnsupportedOperationException("Zadanie domowe");
+    }
+
+    public Map<String, Integer> studentsToRepeatedYears() {
+        throw new UnsupportedOperationException("Zadanie domowe");
     }
 }

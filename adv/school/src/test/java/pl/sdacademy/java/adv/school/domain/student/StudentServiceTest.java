@@ -1,5 +1,7 @@
 package pl.sdacademy.java.adv.school.domain.student;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -224,5 +226,33 @@ class StudentServiceTest {
         //THEN
         assertThat(studentPeriodMap.get("00001001")).isEqualTo(Period.of(10,7,19));
         assertThat(studentPeriodMap.get("00001298")).isEqualTo(Period.of(10,8,7));
+    }
+
+    @Test
+    void studentsToSkippedYears() {
+        //WHEN
+        var result = studentService.studentsToSkippedYears();
+
+        //THEN
+        assertThat(result)
+            .containsOnly(
+                Map.entry("00001009", 1),
+                Map.entry("00002005", 2),
+                Map.entry("00001298", 3)
+            );
+    }
+
+    @Test
+    void studentsToRepeatedYears() {
+        //WHEN
+        var result = studentService.studentsToRepeatedYears();
+
+        //THEN
+        assertThat(result)
+            .containsOnly(
+                Map.entry("00001003", 1),
+                Map.entry("00002004", 1),
+                Map.entry("00001008", 2)
+            );
     }
 }
