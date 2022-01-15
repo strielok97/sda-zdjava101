@@ -3,6 +3,9 @@ package pl.sdacademy.java.adv.school.domain.student;
 import org.apache.commons.lang3.StringUtils;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +14,11 @@ import java.util.stream.Collectors;
 
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final Clock clock;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, Clock clock) {
         this.studentRepository = studentRepository;
+        this.clock = clock;
     }
 
     public List<Student> getStudentsSortedByCityAndName() {
@@ -35,7 +40,6 @@ public class StudentService {
                 .sorted(Comparator.comparing(Student::getBirthDate))
                 .collect(Collectors.toUnmodifiableList());
 
-
     }
 
     public List<Student> getStudentsSortedByAgeDesc() {
@@ -48,20 +52,19 @@ public class StudentService {
 
     public Map<String, List<Student>> getStudentsGroupedByCityAndSortedByName() {
 
-        Map<String, List<Student>> groupedStudents = studentRepository.findAllStudents()
-                .stream()
-                .sorted(Comparator.comparing(Student::getLastName)
-                        .thenComparing(Student::getFirstName))
-                .collect(Collectors.groupingBy(Student::getCity)); //grupujący kolektor pogrupuje i nie zwali sortowania
+        Map<String, List<Student>> groupedStudents =
+                studentRepository.findAllStudents().stream()
+                        .sorted(Comparator.comparing(Student::getLastName).thenComparing(Student::getFirstName))
+                        .collect(Collectors.groupingBy(Student::getCity));
         return groupedStudents;
     }
 
     public Map<String, Student> getStudentsMappedByIdentifier() {
-
         return studentRepository.findAllStudents().stream()
                 //.collect(Collectors.toMap(Student::getId, student -> student))
                 .collect(Collectors.toMap(Student::getId, Function.identity()));
     }
+
     public Map<String, Student> getOldestStudentMappedByCity() {
         return studentRepository.findAllStudents().stream()
                 .collect(Collectors.toMap(Student::getCity, Function.identity(), (student1, student2) -> {
@@ -92,5 +95,18 @@ public class StudentService {
 
         return numberOfStudentsNotFromCity / (double) numberOfStudents * 100;
     }
-}
 
+    public Map<String, Period> getStudentsMappedToAge() {
+        return studentRepository.findAllStudents().stream()
+                .collect(Collectors
+                        .toMap(Student::getId, student -> Period.between(student.getBirthDate(), LocalDate.now(clock))));
+    }
+
+    public Map<String, Integer> studentsToSkippedYears() {
+        throw new UnsupportedOperationException("Zadanie domowe");
+    }
+
+    public Map<String, Integer> studentsToRepeatedYears() {
+        throw new UnsupportedOperationException("Zadanie domowe");
+    }
+}

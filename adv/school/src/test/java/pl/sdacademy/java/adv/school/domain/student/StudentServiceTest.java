@@ -1,15 +1,26 @@
 package pl.sdacademy.java.adv.school.domain.student;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
-import pl.sdacademy.java.adv.school.domain.student.parsers.StudentsParser;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParserImpl;
+import pl.sdacademy.java.adv.school.domain.student.parsers.csv.OpenCsvStudentParser;
+import pl.sdacademy.java.adv.school.domain.student.parsers.json.JsonStudentsParser;
+import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Clock;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +34,16 @@ class StudentServiceTest {
 
     @BeforeAll
     static void beforeAll() throws IOException {
-        final StudentsParser studentsParser = new CsvStudentsParserImpl();
-        try (InputStream studentsDataStream = Main.class.getResourceAsStream("/students.csv")) {
+        final RecordsParser<Student> studentsParser = new OpenCsvStudentParser();
+        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.csv")) {
             students = studentsParser.parseData(studentsDataStream);
         }
     }
 
     @BeforeEach
     void setUp() {
-        studentService = new StudentService(new StudentListRepository(students));
+        Clock clock = Clock.fixed(ZonedDateTime.parse("2022-01-10T12:00:00Z").toInstant(), ZoneId.of("UTC"));
+        studentService = new StudentService(new StudentListRepository(students), clock);
     }
 
     @Test
@@ -92,7 +104,6 @@ class StudentServiceTest {
                         "00001005",
                         "00001009"
                 );
-
     }
 
     @Test
@@ -121,6 +132,7 @@ class StudentServiceTest {
                 );
     }
 
+
     @Test
     void getStudentsGroupedByCityAndSortedByName() {
         //WHEN
@@ -136,14 +148,15 @@ class StudentServiceTest {
     }
 
     @Test
-    void getStudentsMappedByIdentifier() {
+    void getStudentsMapByIdentifier() {
         //WHEN
-        Map<String, Student> studentToIdMap = studentService.getStudentsMappedByIdentifier();
+        Map<String,Student> studentToIdMap = studentService.getStudentsMappedByIdentifier();
 
-        //then
+        //THEN
         assertThat(studentToIdMap).hasSize(15);
         studentToIdMap.forEach((studentId, student) -> assertThat(studentId).isEqualTo(student.getId()));
     }
+
     @Test
     void getOldestStudentMappedByCity() {
         //WHEN
@@ -189,20 +202,57 @@ class StudentServiceTest {
         assertThat(result2).isEqualTo(86.66d, withPrecision(0.5d));
     }
 
-//    @ParameterizedTest
-//    @MethodSource
-//    void getPercentOfStudentsNotFromGivenCity(String city, double expectedResult) {
-//        //WHEN
-//        double result = studentService.getPercentOfStudentNotFromCity(city);
-//
-//        //THEN
-//        assertThat(result).isEqualTo(expectedResult, withPrecision(0.01d));
-//    }
-//
-//    static List<Arguments> getPercentOfStudentsNotFromGivenCity() {
-//        return List.of(
-//                Arguments.of("Kraków", 60d),
-//                Arguments.of("Skawina", 86.66d)
-//        );
-//    }
+    @ParameterizedTest
+    @MethodSource
+    void getPercentOfStudentsNotFromGivenCity(String city, double expectedResult) {
+        //WHEN
+        double result = studentService.getPercentOfStudentNotFromCity(city);
+
+        //THEN
+        assertThat(result).isEqualTo(expectedResult, withPrecision(0.01d));
+    }
+
+    static List<Arguments> getPercentOfStudentsNotFromGivenCity() {
+        return List.of(
+                Arguments.of("Kraków", 60d),
+                Arguments.of("Skawina", 86.66d)
+        );
+    }
+
+    @Test
+    void getStudentsMappedToAge(){
+        //WHEN
+        Map<String, Period> studentPeriodMap = studentService.getStudentsMappedToAge();
+        //THEN
+        assertThat(studentPeriodMap.get("00001001")).isEqualTo(Period.of(10,7,19));
+        assertThat(studentPeriodMap.get("00001298")).isEqualTo(Period.of(10,8,7));
+    }
+
+    @Test
+    void studentsToSkippedYears() {
+        //WHEN
+        var result = studentService.studentsToSkippedYears();
+
+        //THEN
+        assertThat(result)
+                .containsOnly(
+                        Map.entry("00001009", 1),
+                        Map.entry("00002005", 2),
+                        Map.entry("00001298", 3)
+                );
+    }
+
+    @Test
+    void studentsToRepeatedYears() {
+        //WHEN
+        var result = studentService.studentsToRepeatedYears();
+
+        //THEN
+        assertThat(result)
+                .containsOnly(
+                        Map.entry("00001003", 1),
+                        Map.entry("00002004", 1),
+                        Map.entry("00001008", 2)
+                );
+    }
 }

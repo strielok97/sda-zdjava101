@@ -4,41 +4,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
+import pl.sdacademy.java.adv.school.parsers.AbstractCsvParser;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
 
-public class CsvStudentsParserImpl extends AbstractCsvStudentParser {
+public class CsvStudentsParserImpl extends AbstractCsvParser<Student> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvStudentsParserImpl.class);
 
-    @Override
-    public List<Student> parseData(InputStream studentsDataStream) {
-        if (studentsDataStream == null) {
-            return Collections.emptyList();
-        }
-
-        List<Student> students = new LinkedList<>();
-
-        Scanner scanner = new Scanner(studentsDataStream);
-        int lineNumber = 0;
-        while (scanner.hasNextLine()) {
-            lineNumber++;
-            String line = scanner.nextLine();
-            if (StringUtils.isBlank(line)) {
-                LOGGER.info("Skipping line [{}]", lineNumber);
-                continue;
-            }
-            LOGGER.info("Parsing line [{}]: {}", lineNumber, line);
-            //parseStudent(line).ifPresent(student -> students.add(student));
-            parseStudent(line).ifPresent(students::add);
-        }
-
-        return students;
-    }
-
-    protected Optional<Student> parseStudent(String line) {
+    protected Optional<Student> parseRecord(String line) {
         Scanner scanner = new Scanner(line);
         scanner.useDelimiter(",");
         List<String> strings = new ArrayList<>();
