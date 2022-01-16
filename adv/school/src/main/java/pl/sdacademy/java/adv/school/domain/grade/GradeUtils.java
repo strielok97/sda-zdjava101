@@ -42,7 +42,7 @@ public class GradeUtils {
             return Optional.empty();
         }
 
-        BigDecimal result = numerator.divide(denominator, RoundingMode.HALF_UP);
+        BigDecimal result = numerator.divide(denominator, 2, RoundingMode.HALF_UP);
 
         return Optional.of(result);
     }
