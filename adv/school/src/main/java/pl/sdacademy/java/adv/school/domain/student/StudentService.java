@@ -103,16 +103,18 @@ public class StudentService {
     }
 
     public Map<String, Integer> studentsToSkippedYears() {
+        int currentYear = LocalDate.now(clock).getYear();
         return studentRepository.findAllStudents().stream()
-                .filter(student -> student.getStartYear() + student.getSchoolYear() - LocalDate.now(clock).getYear() > 0)
+                .filter(student -> student.getStartYear() + student.getSchoolYear() - currentYear > 0)
                 .collect(Collectors
-                        .toMap(Student::getId, student -> student.getStartYear() + student.getSchoolYear() - LocalDate.now(clock).getYear()));
+                        .toMap(Student::getId, student -> student.getStartYear() + student.getSchoolYear() - currentYear));
     }
 
     public Map<String, Integer> studentsToRepeatedYears() {
+        int currentYear = LocalDate.now(clock).getYear();
         return studentRepository.findAllStudents().stream()
-                .filter(student -> LocalDate.now(clock).getYear() - student.getStartYear() > student.getSchoolYear())
+                .filter(student -> currentYear - student.getStartYear() > student.getSchoolYear())
                 .collect(Collectors
-                        .toMap(Student::getId, student -> LocalDate.now(clock).getYear() - student.getStartYear() - student.getSchoolYear()));
+                        .toMap(Student::getId, student -> currentYear - student.getStartYear() - student.getSchoolYear()));
     }
 }
