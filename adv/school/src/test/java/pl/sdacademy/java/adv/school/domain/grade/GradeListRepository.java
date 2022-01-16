@@ -11,7 +11,7 @@ public class GradeListRepository implements GradeRepository {
     }
 
     @Override
-    public List<Grade> findAllGrade() {
+    public List<Grade> findAllGrades() {
         return grades;
     }
 }

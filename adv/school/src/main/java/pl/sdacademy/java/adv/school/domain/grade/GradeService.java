@@ -8,7 +8,7 @@ public class GradeService {
     }
 
     public long countMathGrades() {
-        return gradeRepository.findAllGrade().stream()
+        return gradeRepository.findAllGrades().stream()
                 .filter(t -> "MAT".equals(t.getSchoolSubjectCode()))
                 .count();
     }

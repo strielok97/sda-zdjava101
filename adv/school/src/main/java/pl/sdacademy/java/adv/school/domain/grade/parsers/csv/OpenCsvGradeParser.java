@@ -10,7 +10,6 @@ import pl.sdacademy.java.adv.school.parsers.AbstractCsvParser;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.MissingFormatArgumentException;
 import java.util.Optional;
 
 public class OpenCsvGradeParser extends AbstractCsvParser<Grade> {
@@ -56,7 +55,7 @@ public class OpenCsvGradeParser extends AbstractCsvParser<Grade> {
                 gradeWeight = GradeWeight.AKT;
                 break;
             default:
-                throw new MissingFormatArgumentException("Cannot format text to gradeWeight");
+                throw new IllegalArgumentException(String.format("Cannot format \"%s\" to gradeWeight", input));
         }
         return gradeWeight;
     }
