@@ -10,6 +10,7 @@ import pl.sdacademy.java.adv.school.parsers.AbstractCsvParser;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.MissingFormatArgumentException;
 import java.util.Optional;
 
 public class OpenCsvGradeParser extends AbstractCsvParser<Grade> {
@@ -30,6 +31,8 @@ public class OpenCsvGradeParser extends AbstractCsvParser<Grade> {
             grade.setStudentId(strings[0]);
             grade.setSchoolSubjectCode(strings[1]);
             GradeWeight gradeWeight = switchStringToGradeWeight(strings[2]);
+            // Wariant 2:
+            // GradeWeight gradeWeight = GradeWeight.valueOf(strings[2]);
             grade.setGradeWeight(gradeWeight);
             grade.setValue(new BigDecimal(strings[3]));
         } catch (Exception e) {
@@ -52,6 +55,8 @@ public class OpenCsvGradeParser extends AbstractCsvParser<Grade> {
             case "AKT":
                 gradeWeight = GradeWeight.AKT;
                 break;
+            default:
+                throw new MissingFormatArgumentException("Cannot format text to gradeWeight");
         }
         return gradeWeight;
     }
