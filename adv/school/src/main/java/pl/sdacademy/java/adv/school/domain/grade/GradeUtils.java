@@ -25,16 +25,19 @@ public class GradeUtils {
      */
     public static Optional<BigDecimal> gradesAverage(Collection<Grade> grades) {
 
-        List<BigDecimal> listOfWeights = grades.stream()
-                .map(t -> t.getGradeWeight().getWeight())
-                .collect(Collectors.toList());
 
-        BigDecimal numerator = new BigDecimal(0);
-        BigDecimal number;
-//        for (BigDecimal weight: listOfWeights) {
-//            number = weight
-//        }
-//        )
+        //BigDecimal - ma wartość i precyzje. typy jak float, double są szybkie do użycia
+        BigDecimal nominator = grades.stream()
+                .map(t -> t.getGradeWeight().getWeight().multiply(t.getValue()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add); //reduce tutaj zaczyna z 0, i za każdym razem dodaje kolejną
+
+        BigDecimal denominator = grades.stream()
+                .map(t -> t.getGradeWeight().getWeight())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+//        if ()
+
+
 
 
 

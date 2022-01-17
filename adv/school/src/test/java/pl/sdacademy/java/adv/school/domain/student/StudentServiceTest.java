@@ -9,6 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.sdacademy.java.adv.school.Main;
+import pl.sdacademy.java.adv.school.domain.student.StudentListRepository;
+import pl.sdacademy.java.adv.school.domain.student.StudentService;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.CsvStudentsParserImpl;
 import pl.sdacademy.java.adv.school.domain.student.parsers.csv.OpenCsvStudentParser;
