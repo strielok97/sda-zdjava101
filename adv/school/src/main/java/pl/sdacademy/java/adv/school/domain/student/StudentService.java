@@ -103,10 +103,18 @@ public class StudentService {
     }
 
     public Map<String, Integer> studentsToSkippedYears() {
-        throw new UnsupportedOperationException("Zadanie domowe");
+        int currentYear = LocalDate.now(clock).getYear();
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> student.getStartYear() + student.getSchoolYear() - currentYear > 0)
+                .collect(Collectors
+                        .toMap(Student::getId, student -> student.getStartYear() + student.getSchoolYear() - currentYear));
     }
 
     public Map<String, Integer> studentsToRepeatedYears() {
-        throw new UnsupportedOperationException("Zadanie domowe");
+        int currentYear = LocalDate.now(clock).getYear();
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> currentYear - student.getStartYear() > student.getSchoolYear())
+                .collect(Collectors
+                        .toMap(Student::getId, student -> currentYear - student.getStartYear() - student.getSchoolYear()));
     }
 }
