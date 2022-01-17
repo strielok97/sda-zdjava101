@@ -9,7 +9,9 @@ import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,5 +41,15 @@ public class GradeServiceTest {
 
         //THEN
         assertThat(result).isEqualTo(48);
+    }
+
+    @Test
+    void averagePerStudentId() {
+        //WHEN
+        Map<String, BigDecimal> result = gradeService.averagePerStudentId();
+
+        //THEN
+        assertThat(result.get("00001003")).isEqualByComparingTo("2.68");
+
     }
 }
