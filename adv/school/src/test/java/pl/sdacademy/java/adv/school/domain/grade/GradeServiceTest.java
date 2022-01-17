@@ -52,4 +52,16 @@ public class GradeServiceTest {
         assertThat(result.get("00001003")).isEqualByComparingTo("2.68");
 
     }
+
+    @Test
+    void averagePerStudentIdAndSubjectCode() {
+        //WHEN
+        Map<StudentToSubject, BigDecimal> result = gradeService.averagePerStudentIdAndSubjectCode();
+
+        //THEN
+        assertThat(result.get(new StudentToSubject("00001003", "MAT"))).isEqualByComparingTo("1.91");
+        assertThat(result.get(new StudentToSubject("00001003", "POL"))).isEqualByComparingTo("2.7");
+        assertThat(result.get(new StudentToSubject("00001003", "HIS"))).isEqualByComparingTo("3.14");
+        assertThat(result.get(new StudentToSubject("00001003", "ANG"))).isEqualByComparingTo("3.22");
+    }
 }

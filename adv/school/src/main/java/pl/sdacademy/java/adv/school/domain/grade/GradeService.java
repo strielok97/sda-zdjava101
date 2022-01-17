@@ -30,4 +30,17 @@ public class GradeService {
                 ));
 
     }
+
+    public Map<StudentToSubject, BigDecimal> averagePerStudentIdAndSubjectCode() {
+
+        List<Grade> allGrades = gradeRepository.findAllGrades();
+        return allGrades.stream()
+                .collect(Collectors.groupingBy(
+                        grade -> new StudentToSubject(grade.getStudentId(), grade.getSchoolSubjectCode()),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                grades -> GradeUtils.gradesAverage(grades).orElse(null)
+                        )
+                ));
+    }
 }
