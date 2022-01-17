@@ -102,11 +102,16 @@ public class StudentService {
                         .toMap(Student::getId, student -> Period.between(student.getBirthDate(), LocalDate.now(clock))));
     }
 
-    public Map<String, Integer> studentsToSkippedYears() {
-        throw new UnsupportedOperationException("Zadanie domowe");
-    }
+//    public Map<String, Integer> studentsToSkippedYears() {
+//        return studentRepository.findAllStudents().stream()
+//                .filter(Student::getStartYear - )
+
+
+//        throw new UnsupportedOperationException("Zadanie domowe");
+//    }
 
     public Map<String, Integer> studentsToRepeatedYears() {
         throw new UnsupportedOperationException("Zadanie domowe");
     }
+
 }

@@ -3,9 +3,12 @@ package pl.sdacademy.java.adv.school.domain.grade;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GradeUtils {
+
     // Czasem spotykaną praktyką jest rzucanie wyjątku w PRYWATNYM konstruktorze klasy UŻYTKOWEJ.
     // Zapobiega to przypadkowemu stworzeniu nowej instancji nawet przy pomocy użyciu mechanizmu refleksji.
     // NIE należy modyfikować tego konstruktora!
@@ -21,6 +24,26 @@ public class GradeUtils {
      * suma wag jest mniejsza lub równa {@code 0} lub suma wyważonych ocen (po wymnożeniu z wagą) jest mniejsza od {@code 1}.
      */
     public static Optional<BigDecimal> gradesAverage(Collection<Grade> grades) {
+
+        List<BigDecimal> listOfWeights = grades.stream()
+                .map(t -> t.getGradeWeight().getWeight())
+                .collect(Collectors.toList());
+
+        BigDecimal numerator = new BigDecimal(0);
+        BigDecimal number;
+//        for (BigDecimal weight: listOfWeights) {
+//            number = weight
+//        }
+//        )
+
+
+
+
+
+
+
+
+
         /*
         Zadanie to może zostać zrealizowane zarówno przy użyciu tradycyjnej pętli, jak i Stream API (zalecane!)
         Wagę oceny jako wartość BigDecimal można pobrać z grade.getGradeWeight().getWeight()
