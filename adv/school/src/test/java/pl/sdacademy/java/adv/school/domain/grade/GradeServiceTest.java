@@ -5,6 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.grade.parsers.csv.OpenCsvGradeParser;
+import pl.sdacademy.java.adv.school.domain.student.StudentListRepository;
+import pl.sdacademy.java.adv.school.domain.student.StudentService;
+import pl.sdacademy.java.adv.school.domain.student.model.Student;
+import pl.sdacademy.java.adv.school.domain.student.parsers.csv.OpenCsvStudentParser;
 import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
@@ -18,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GradeServiceTest {
 
     private static List<Grade> grades;
+    private static List<Student> students;
 
     private GradeService gradeService;
 
@@ -27,11 +32,17 @@ public class GradeServiceTest {
         try (InputStream gradesDataStream = Main.class.getResourceAsStream("/grades.csv")) {
             grades = gradesParser.parseData(gradesDataStream);
         }
+
+        final RecordsParser<Student> studentsParser = new OpenCsvStudentParser();
+        try(InputStream studentsDataStream = Main.class.getResourceAsStream("/students.csv")) {
+            students = studentsParser.parseData(studentsDataStream);
+        }
     }
 
     @BeforeEach
     void setUp() {
-        gradeService = new GradeService(new GradeListRepository(grades));
+        StudentService studentService = new StudentService(new StudentListRepository(students), null);
+        gradeService = new GradeService(new GradeListRepository(grades), studentService);
     }
 
     @Test
@@ -63,5 +74,16 @@ public class GradeServiceTest {
         assertThat(result.get(new StudentToSubject("00001003", "POL"))).isEqualByComparingTo("2.7");
         assertThat(result.get(new StudentToSubject("00001003", "HIS"))).isEqualByComparingTo("3.14");
         assertThat(result.get(new StudentToSubject("00001003", "ANG"))).isEqualByComparingTo("3.22");
+    }
+
+    @Test
+    void averagePerSchoolGroup() {
+        //WHEN
+        Map<String, BigDecimal> result = gradeService.averagePerSchoolGroup();
+
+        //THEN
+        assertThat(result.get("4A")).isEqualByComparingTo("3.83");
+        assertThat(result.get("4B")).isEqualByComparingTo("3.8");
+        assertThat(result.get("8A")).isEqualByComparingTo("4.09");
     }
 }
