@@ -7,6 +7,7 @@ import pl.sdacademy.java.adv.school.domain.student.model.Student;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class GradeService {
@@ -69,5 +70,20 @@ public class GradeService {
                 .orElseThrow(); //warto rzucic wlasny wyjatek z Id ucznia
 
         return StringUtils.join(student.getSchoolYear(), student.getClassCode());
+    }
+
+    public Map<String, BigDecimal> threatenedStudents(BigDecimal threshold) {
+        Predicate<Map.Entry<String, BigDecimal>> predicate = entry -> entry.getValue().compareTo(threshold) <= 0;
+        return studentByAveragePredicate(predicate);
+    }
+
+    public Map<String, BigDecimal> topStudents(BigDecimal threshold) {
+        return studentByAveragePredicate(entry -> entry.getValue().compareTo(threshold) >= 0);
+    }
+
+    private Map<String, BigDecimal> studentByAveragePredicate(Predicate<Map.Entry<String, BigDecimal>> predicate) {
+        return averagePerStudentId().entrySet().stream()
+                .filter(predicate)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
