@@ -9,6 +9,7 @@ import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,12 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository, Clock clock) {
         this.studentRepository = studentRepository;
         this.clock = clock;
+    }
+
+    public Optional<Student> getStudentById(String studentId) {
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> student.getId().equals(studentId))
+                .findAny();
     }
 
     public List<Student> getStudentsSortedByCityAndName() {
