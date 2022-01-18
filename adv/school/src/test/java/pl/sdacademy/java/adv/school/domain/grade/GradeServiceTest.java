@@ -86,4 +86,29 @@ public class GradeServiceTest {
         assertThat(result.get("4B")).isEqualByComparingTo("3.8");
         assertThat(result.get("8A")).isEqualByComparingTo("4.09");
     }
+
+    @Test
+    void threatenedStudents() {
+        //WHEN
+        Map<String,BigDecimal> result = gradeService.threatenedStudents(new BigDecimal("3.0"));
+
+        //THEN
+        assertThat(result).hasSize(3);
+
+        assertThat(result.get("00001003")).isEqualByComparingTo("2.68");
+        assertThat(result.get("00001008")).isEqualByComparingTo("1.84");
+        assertThat(result.get("00002004")).isEqualByComparingTo("2.77");
+    }
+
+    @Test
+    void topStudents() {
+        //WHEN
+        Map<String,BigDecimal> result = gradeService.topStudents(new BigDecimal("4.5"));
+
+        //THEN
+        assertThat(result).hasSize(2);
+
+        assertThat(result.get("00001009")).isEqualByComparingTo("5.02");
+        assertThat(result.get("00002005")).isEqualByComparingTo("5.14");
+    }
 }
