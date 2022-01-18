@@ -9,6 +9,7 @@ import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,12 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository, Clock clock) {
         this.studentRepository = studentRepository;
         this.clock = clock;
+    }
+
+    public Optional<Student> getStudentById(String studentId) {
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> student.getId().equals(studentId))
+                .findAny();
     }
 
     public List<Student> getStudentsSortedByCityAndName() {
@@ -50,14 +57,14 @@ public class StudentService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-  public Map<String, List<Student>> getStudentsGroupedByCityAndSortedByName() {
+    public Map<String, List<Student>> getStudentsGroupedByCityAndSortedByName() {
 
-    Map<String, List<Student>> groupedStudents =
-        studentRepository.findAllStudents().stream()
-            .sorted(Comparator.comparing(Student::getLastName).thenComparing(Student::getFirstName))
-            .collect(Collectors.groupingBy(Student::getCity));
-    return groupedStudents;
-  }
+        Map<String, List<Student>> groupedStudents =
+                studentRepository.findAllStudents().stream()
+                        .sorted(Comparator.comparing(Student::getLastName).thenComparing(Student::getFirstName))
+                        .collect(Collectors.groupingBy(Student::getCity));
+        return groupedStudents;
+    }
 
     public Map<String, Student> getStudentsMappedByIdentifier() {
         return studentRepository.findAllStudents().stream()
