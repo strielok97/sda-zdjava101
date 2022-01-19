@@ -5,6 +5,7 @@ import pl.sdacademy.java.adv.school.domain.student.StudentService;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -85,5 +86,21 @@ public class GradeService {
         return averagePerStudentId().entrySet().stream()
                 .filter(predicate)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    /**
+     * Zwraca mapę zawierającą informacje o wynikach danych klas dla poszczególnych przedmiotów.
+     * Średnie wyliczone mają być dla klucza z klasą i przedmiotem (czyli parą wartości, np. {@code 4A,MAT}).
+     */
+    public Map<SchoolGroupToSubject, BigDecimal> averagePerSchoolGroupAndSubjectCode() {
+        throw new UnsupportedOperationException("Zadanie domowe!");
+    }
+
+    /**
+     * Zwraca listę uczniów posortowanych MALEJĄCO wg liczby ocen za aktywność oraz ROSNĄCO wg identyfikatora ucznia.
+     * Lista zawiera uczniów mających PRZYNAJMNIEJ JEDNĄ ocenę za aktywność (typ oceny: {@code AKT}).
+     */
+    public List<String> mostToLeastActiveStudentsOrderedById() {
+        throw new UnsupportedOperationException("Zadanie domowe!");
     }
 }

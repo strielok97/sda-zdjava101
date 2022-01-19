@@ -111,4 +111,38 @@ public class GradeServiceTest {
         assertThat(result.get("00001009")).isEqualByComparingTo("5.02");
         assertThat(result.get("00002005")).isEqualByComparingTo("5.14");
     }
+
+    @Test
+    void averagePerSchoolGroupAndSubjectCode() {
+        //WHEN
+        var result = gradeService.averagePerSchoolGroupAndSubjectCode();
+
+        //THEN
+        assertThat(result.get(new SchoolGroupToSubject("4A","MAT"))).isEqualByComparingTo("3.86");
+        assertThat(result.get(new SchoolGroupToSubject("4B","MAT"))).isEqualByComparingTo("3.90");
+        assertThat(result.get(new SchoolGroupToSubject("8A","MAT"))).isEqualByComparingTo("4.82");
+    }
+
+    @Test
+    void mostToLeastActiveStudents() {
+        //WHEN
+        var result = gradeService.mostToLeastActiveStudentsOrderedById();
+
+        //THEN
+        assertThat(result).containsExactly(
+            "00001009",
+            "00002002",
+            "00002005",
+            "00001001",
+            "00001004",
+            "00002001",
+            "00002003",
+            "00001002",
+            "00001003",
+            "00001005",
+            "00001006",
+            "00001008",
+            "00001298"
+        );
+    }
 }
