@@ -3,6 +3,7 @@ package pl.sdacademy.java.adv.school.domain.grade.parsers;
 import pl.sdacademy.java.adv.school.domain.grade.Grade;
 import pl.sdacademy.java.adv.school.domain.grade.GradeRepository;
 import pl.sdacademy.java.adv.school.domain.grade.GradeUtils;
+import pl.sdacademy.java.adv.school.domain.student.StudentService;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 
 public class GradeService {
     private final GradeRepository gradeRepository;
+    private final StudentService studentService;
 
-    public GradeService(GradeRepository gradeRepository) {
+    public GradeService(GradeRepository gradeRepository, StudentService studentService) {
         this.gradeRepository = gradeRepository;
+        this.studentService = studentService;
     }
 
     public long countMathGrades() {

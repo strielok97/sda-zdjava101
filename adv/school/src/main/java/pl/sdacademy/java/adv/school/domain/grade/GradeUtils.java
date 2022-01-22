@@ -35,8 +35,11 @@ public class GradeUtils {
                 .map(t -> t.getGradeWeight().getWeight())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-//        if ()
+        if (nominator.compareTo(BigDecimal.ONE)< 0 || denominator.compareTo(BigDecimal.ZERO) <= 0) {
+            return Optional.empty();
+        }
 
+//        BigDecimal result = nominator.divide
 
 
 
