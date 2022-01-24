@@ -93,7 +93,8 @@ public class GradeService {
      * Średnie wyliczone mają być dla klucza z klasą i przedmiotem (czyli parą wartości, np. {@code 4A,MAT}).
      */
     public Map<SchoolGroupToSubject, BigDecimal> averagePerSchoolGroupAndSubjectCode() {
-        throw new UnsupportedOperationException("Zadanie domowe!");
+        List<Grade> allGrades = gradeRepository.findAllGrades();
+        return allGrades.stream()
     }
 
     /**
@@ -101,6 +102,6 @@ public class GradeService {
      * Lista zawiera uczniów mających PRZYNAJMNIEJ JEDNĄ ocenę za aktywność (typ oceny: {@code AKT}).
      */
     public List<String> mostToLeastActiveStudentsOrderedById() {
-        throw new UnsupportedOperationException("Zadanie domowe!");
+            throw new UnsupportedOperationException("Zadanie domowe!");
     }
 }
