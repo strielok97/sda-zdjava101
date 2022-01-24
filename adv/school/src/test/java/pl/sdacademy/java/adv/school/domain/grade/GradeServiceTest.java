@@ -2,6 +2,7 @@ package pl.sdacademy.java.adv.school.domain.grade;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import pl.sdacademy.java.adv.school.Main;
 import pl.sdacademy.java.adv.school.domain.grade.parsers.GradeService;
 import pl.sdacademy.java.adv.school.domain.grade.parsers.OpenCsvGradeParser;
@@ -13,10 +14,14 @@ import pl.sdacademy.java.adv.school.parsers.RecordsParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class GradeServiceTest {  //TODO ogarnąć to z mastera po dokończeniu PD!
     private static List<Grade> grades;
@@ -41,5 +46,24 @@ public class GradeServiceTest {  //TODO ogarnąć to z mastera po dokończeniu P
         StudentService studentService = new StudentService(new StudentListRepository(students), null);
         gradeService = new GradeService(new GradeListRepository(grades), studentService);
     }
+
+    @Test
+    void countMathGrades() {
+        //WHEN
+        long result = gradeService.countMathGrades();
+
+        //THEN
+        assertThat(result).isEqualTo(48);
+    }
+
+    @Test
+    void averagePerStudentId() {
+        //WHEN
+        Map<String, BigDecimal> result = gradeService.averagePerStudentId();
+        //THEN
+        assertThat(result.get("00001003")).isEqualByComparingTo("2.68");
+    }
+
+
 
 }

@@ -102,6 +102,21 @@ public class StudentService {
                         .toMap(Student::getId, student -> Period.between(student.getBirthDate(), LocalDate.now(clock))));
     }
 
+    public Map<String, Integer> studentsToSkippedYears() {
+        int currentYear = LocalDate.now(clock).getYear();
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> student.getStartYear() + student.getSchoolYear() - currentYear > 0)
+                .collect(Collectors.toMap(Student::getId, student -> student.getStartYear() + student.getSchoolYear() - currentYear));
+    }
+
+    public Map<String, Integer> studentsToRepeatedYears() {
+        int currentYear = LocalDate.now(clock).getYear();
+        return studentRepository.findAllStudents().stream()
+                .filter(student -> currentYear - student.getStartYear() > student.getSchoolYear())
+                .collect(Collectors
+                        .toMap(Student::getId, student -> currentYear - student.getStartYear() - student.getSchoolYear()));
+    }
+
    /* public Map<String, Integer> studentsToSkippedYears() {
         int currentYear = LocalDate.now(clock).getYear();
         return studentRepository.findAllStudents().stream()

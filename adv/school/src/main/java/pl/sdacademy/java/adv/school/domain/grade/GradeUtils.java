@@ -38,8 +38,10 @@ public class GradeUtils {
         if (nominator.compareTo(BigDecimal.ONE)< 0 || denominator.compareTo(BigDecimal.ZERO) <= 0) {
             return Optional.empty();
         }
+        BigDecimal result = nominator.divide(denominator, 2, RoundingMode.HALF_UP);
 
-//        BigDecimal result = nominator.divide
+        return Optional.of(result);
+
 
 
 
@@ -57,6 +59,6 @@ public class GradeUtils {
         (BigDecimal.ONE.equals(new BigDecimal("1.0"))) ---> false
         (BigDecimal.ONE.compareTo(new BigDecimal("1.0")) == 0) ---> true
         */
-        throw new UnsupportedOperationException("Zadanie domowe");
+
     }
 }
