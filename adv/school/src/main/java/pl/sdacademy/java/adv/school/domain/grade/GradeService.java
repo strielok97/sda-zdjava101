@@ -93,7 +93,16 @@ public class GradeService {
      * Średnie wyliczone mają być dla klucza z klasą i przedmiotem (czyli parą wartości, np. {@code 4A,MAT}).
      */
     public Map<SchoolGroupToSubject, BigDecimal> averagePerSchoolGroupAndSubjectCode() {
-        throw new UnsupportedOperationException("Zadanie domowe!");
+        return gradeRepository.findAllGrades().stream()
+                .collect(
+                        Collectors.groupingBy(grade -> new SchoolGroupToSubject(
+                                gradeToSchoolGroup(grade),
+                                grade.getSchoolSubjectCode()),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                grade -> GradeUtils.gradesAverage(grade).orElse(null))
+                        )
+                );
     }
 
     /**
