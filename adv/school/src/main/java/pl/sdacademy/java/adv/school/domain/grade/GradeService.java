@@ -5,7 +5,6 @@ import pl.sdacademy.java.adv.school.domain.student.StudentService;
 import pl.sdacademy.java.adv.school.domain.student.model.Student;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -93,7 +92,17 @@ public class GradeService {
      * Średnie wyliczone mają być dla klucza z klasą i przedmiotem (czyli parą wartości, np. {@code 4A,MAT}).
      */
     public Map<SchoolGroupToSubject, BigDecimal> averagePerSchoolGroupAndSubjectCode() {
-        throw new UnsupportedOperationException("Zadanie domowe!");
+        return gradeRepository.findAllGrades().stream()
+                .collect(
+                        Collectors.groupingBy(
+                                grade -> new SchoolGroupToSubject(
+                                        gradeToSchoolGroup(grade),
+                                        grade.getSchoolSubjectCode()),
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        grade -> GradeUtils.gradesAverage(grade).orElse(null))
+                        )
+                );
     }
 
     /**
